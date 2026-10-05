@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Contoh Synchronous :
+        console.log("1. Mula-mula pesan makanan");
+        console.log("2. Menunggu makanan dimasak..."); // Proses ini langsung berjalan
+        console.log("3. Makanan siap, lalu dimakan");
+    // Output:
+    // 1. Mula-mula pesan makanan
+    // 2. Menunggu makanan dimasak...
+    // 3. Makanan siap, lalu dimakan
+
+        // Contoh Asynchronous :
+        console.log("1. Pesan makanan");
+        // Simulasi proses masak selama 2 detik (2000 ms)
+        setTimeout(() => {
+            console.log("2. Makanan selesai dimasak!");
+        }, 2000);
+        
+        console.log("3. Melakukan aktivitas lain (misal: main HP)");
+        // Output:
+        // 1. Pesan makanan
+        // 3. Melakukan aktivitas lain (misal: main HP)
+        // 2. Makanan selesai dimasak! (baru muncul setelah 2 detik)
+
+
+    // 3 Cara Menulis Asynchronous di Javascript :
+
+    // 1. Callback
+    // Callback adalah fungsi yang dikirimkan sebagai argumen ke dalam fungsi lain, yang kemudian dipanggil setelah suatu proses selesai.
+
+    function ambilData(callback) {
+  setTimeout(() => {
+    callback("Data berhasil diambil");
+  }, 1000);
+}
+
+  ambilData((hasil) => {
+  console.log(hasil); // Output setelah 1 detik: Data berhasil diambil
+});
+  console.log(hasil); // Output setelah 1 detik: Data berhasil diambil
+
+   // 2. Promise
+   // Promise adalah objek yang mewakili hasil akhir dari suatu operasi asinkron (baik itu berhasil/fulfilled maupun gagal/rejected).
+
+   const ambilData = new Promise((resolve, reject) => {
+  let sukses = true;
+  setTimeout(() => {
+    if (sukses) {
+      resolve("Data berhasil didapat!");
+    } else {
+      reject("Gagal mengambil data.");
+    }
+  }, 1000);
+});
+
+// Menggunakan .then() dan .catch()
+ ambilData
+  .then((respon) => console.log(respon))
+  .catch((error) => console.error(error));
+
+    // 3. Async atau Await
+    // async atau await adalah fitur sintaksis modern (syntactic sugar) yang dibangun di atas Promise. Fitur ini memungkinkan penulisan kode asinkron agar terlihat dan berperilaku seolah-olah seperti kode sinkron, sehingga jauh lebih mudah dibaca.
+
+    function ambilData() {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve("Data berhasil dimuat"), 1000);
+  });
+}
+
+  // Fungsi harus diawali kata kunci `async`
+  async function jalankanProses() {
+  console.log("Memulai...");
+  
+  // Menggunakan `await` untuk menunggu hingga Promise selesai
+  const hasil = await ambilData(); 
+  console.log(hasil);
+  
+  console.log("Selesai!");
+}
+
+jalankanProses();
+    </script>
+</body>
+</html>
